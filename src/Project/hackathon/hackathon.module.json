@@ -1,0 +1,83 @@
+{
+  "namespace": "Project.hackathon",
+  "items": {
+    "includes": [
+      {
+        "name": "content-root",
+        "path": "/sitecore/content",
+        "scope": "singleItem",
+        "allowedPushOperations": "createAndUpdate"
+      },
+      {
+        "name": "layouts",
+        "path": "/sitecore/layout/Layouts/Project/hackathon",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "components",
+        "path": "/sitecore/layout/Renderings/Feature/hackathon",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "componentsProject",
+        "path": "/sitecore/layout/Renderings/Project/hackathon",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "placeholders",
+        "path": "/sitecore/layout/Placeholder Settings/Project/hackathon",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "templates",
+        "path": "/sitecore/templates/Project/hackathon",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "templatesFeature",
+        "path": "/sitecore/templates/Feature/hackathon",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "media",
+        "path": "/sitecore/Media Library/Project/hackathon",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "branchesFeature",
+        "path": "/sitecore/templates/Branches/Feature/hackathon",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "branchesProject",
+        "path": "/sitecore/templates/Branches/Project/hackathon",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "modules",
+        "path": "/sitecore/system/Settings/Feature/hackathon",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "apikeyhackathonEu",
+        "path": "/sitecore/system/Settings/Services/API Keys/hackathonEuSxa",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "apikeyhackathonAnz",
+        "path": "/sitecore/system/Settings/Services/API Keys/hackathonAnzSxa",
+        "allowedPushOperations": "CreateUpdateAndDelete"
+      },
+      {
+        "name": "apikeyXmCloudPreview",
+        "path": "/sitecore/system/Settings/Services/API Keys/XmCloudPreview",
+        "scope": "singleItem"
+      },
+      {
+        "name": "content",
+        "path": "/sitecore/content/hackathon",
+        "allowedPushOperations": "CreateOnly"
+      }
+    ]
+  }
+}

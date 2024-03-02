@@ -1,0 +1,55 @@
+services:
+
+  # Container used to run the MVP Rendering host.
+  mvp-rendering:
+    environment:
+      Sitecore__InstanceUri: ${EXPERIENCE_EDGE_URL}
+      Sitecore__LayoutServicePath: "/api/graphql/v1"
+      Sitecore__ExperienceEdgeToken: ${EXPERIENCE_EDGE_TOKEN}
+
+  hackathonUSAeu:
+    environment:
+      SITECORE_API_HOST: ${EXPERIENCE_EDGE_URL}
+      SITECORE_API_KEY: ${EXPERIENCE_EDGE_TOKEN}
+      GRAPH_QL_ENDPOINT: ${GRAPH_QL_ENDPOINT}
+
+  hackathonUSAanz:
+    environment:
+      SITECORE_API_HOST: ${EXPERIENCE_EDGE_URL}
+      SITECORE_API_KEY: ${EXPERIENCE_EDGE_TOKEN}
+      GRAPH_QL_ENDPOINT: ${GRAPH_QL_ENDPOINT}
+
+  hackathonUSAindia:
+    environment:
+      SITECORE_API_HOST: ${EXPERIENCE_EDGE_URL}
+      SITECORE_API_KEY: ${EXPERIENCE_EDGE_TOKEN}
+      GRAPH_QL_ENDPOINT: ${GRAPH_QL_ENDPOINT}
+
+  hackathon:
+    environment:
+      SITECORE_API_HOST: ${EXPERIENCE_EDGE_URL}
+      SITECORE_API_KEY: ${EXPERIENCE_EDGE_TOKEN}
+      GRAPH_QL_ENDPOINT: ${GRAPH_QL_ENDPOINT}
+
+  hackathonUSA2024eu:
+    environment:
+      SITECORE_API_HOST: ${EXPERIENCE_EDGE_URL}
+      SITECORE_API_KEY: ${EXPERIENCE_EDGE_TOKEN}
+      GRAPH_QL_ENDPOINT: ${GRAPH_QL_ENDPOINT}
+      
+  # Set containers below to 'deploy.replicas: 0' to just run hosts & treafik
+  mssql:
+    deploy:
+      replicas: 0
+  solr:
+    deploy:
+      replicas: 0
+  cm:
+    deploy:
+      replicas: 0
+  mssql-init:
+    deploy:
+      replicas: 0
+  solr-init:
+    deploy:
+      replicas: 0

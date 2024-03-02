@@ -1,0 +1,15 @@
+﻿header {
+    z-index: auto;
+}
+
+.scEmptyPlaceholder {
+    width: 100%;
+}
+
+#topbar {
+    height: auto;
+}
+
+iframe.scFixedRibbon {
+    position: relative !important;
+}
