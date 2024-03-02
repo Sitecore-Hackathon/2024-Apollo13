@@ -33,13 +33,13 @@ WORKDIR /build
 COPY --from=nuget-prep ./nuget ./
 
 # Restore Platform NuGet packages
-RUN nuget restore ./src/XmCloudIntroduction.sln -Verbosity quiet
+RUN nuget restore ./src/Hackathonn.sln -Verbosity quiet
 
 # Copy remaining source code
 COPY src/ ./src/
 
 # Build the Sitecore main platform artifacts
-RUN msbuild .\src\XmCloudIntroduction.sln /p:Configuration=$env:BUILD_CONFIGURATION /m /p:DeployOnBuild=true /p:PublishProfile=Local
+RUN msbuild .\src\Hackathonn.sln /p:Configuration=$env:BUILD_CONFIGURATION /m /p:DeployOnBuild=true /p:PublishProfile=Local
 
 # Save the artifacts for copying into other images (see 'cm' and 'rendering' Dockerfiles).
 FROM ${BASE_IMAGE}
