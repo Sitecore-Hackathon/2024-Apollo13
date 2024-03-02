@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp8.0</TargetFramework>
+		<UserSecretsId>{BB638E63-026A-4E83-A108-6DACB910C4B0}</UserSecretsId>
+		<SitecoreRoleType>rendering</SitecoreRoleType>
+		<IsDeploymentModule>true</IsDeploymentModule>
+		<OutputFolderName>mvp-rendering</OutputFolderName>
+		<DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+		<DockerfileContext>..\..\..\..\..</DockerfileContext>
+		<AssemblyName>Winner.Project.MvpSite</AssemblyName>
+		<RootNamespace>Winner.Project.MvpSite</RootNamespace>
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+	</PropertyGroup>
+
+	<Target Name="FixDotnetWatch" AfterTargets="_CoreCollectWatchItems">
+		<ItemGroup>
+			<_WatchRelativePath Include="@(Watch)" Condition="'%(Identity)' != '%(Watch.FullPath)'" />
+			<Watch Remove="@(_WatchRelativePath)" />
+			<Watch Include="%(_WatchRelativePath.FullPath)" />
+		</ItemGroup>
+	</Target>
+
+	<ItemGroup>
+	  <Content Remove="compilerconfig.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_WebToolingArtifacts Remove="Properties\PublishProfiles\Local.pubxml" />
+	</ItemGroup> 
+
+	<ItemGroup>
+	  <None Include="compilerconfig.json" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="BuildWebCompiler" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+		<PackageReference Include="Microsoft.AspNetCore.Session" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.Http" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+		<PackageReference Include="Sitecore.LayoutService.Client" />
+		<PackageReference Include="Sitecore.AspNet.RenderingEngine" />
+		<PackageReference Include="Sitecore.AspNet.ExperienceEditor" />
+		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Feature\BasicContent\rendering\Winner.Feature.BasicContent.Rendering.csproj" />
+	  <ProjectReference Include="..\..\..\Feature\Navigation\rendering\Winner.Feature.Navigation.Rendering.csproj" />
+	  <ProjectReference Include="..\..\..\Feature\People\rendering\Winner.Feature.People.Rendering.csproj" />
+	  <ProjectReference Include="..\..\..\Feature\Selections\rendering\Winner.Feature.Selections.Rendering.csproj" />
+	  <ProjectReference Include="..\..\..\Feature\Social\rendering\Winner.Feature.Social.Rendering.csproj" />
+	  <ProjectReference Include="..\..\..\Feature\User\rendering\Winner.Feature.User.Rendering.csproj" />
+	  <ProjectReference Include="..\..\..\Foundation\Configuration\rendering\Winner.Foundation.Configuration.Rendering.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,6 +1,5 @@
 services:
 
-  # A Windows-based nodejs base image
   nodejs:
     image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-nodejs:${VERSION:-latest}
     build:
@@ -11,37 +10,235 @@ services:
     deploy:
       replicas: 0
 
-  rendering:
-    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-rendering:${VERSION:-latest}
+  hackathonUSAeu:
+    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-hackathonUSA-eu:${VERSION:-latest}
     build:
-      context: ./docker/build/rendering
+      context: ./docker/build/hackathonUSA
       target: ${BUILD_CONFIGURATION}
       args:
         PARENT_IMAGE: ${REGISTRY}${COMPOSE_PROJECT_NAME}-nodejs:${VERSION:-latest}
     volumes:
-      - .\src\sxastarter:C:\app
+      - .\src\Project\hackathonUSA\hackathonUSAEuSxa:C:\app
     environment:
       SITECORE_API_HOST: "http://cm"
       NEXTJS_DIST_DIR: ".next-container"
-      PUBLIC_URL: "https://${RENDERING_HOST}"
+      PUBLIC_URL: "https://${hackathonUSA_EU_HOST}"
       JSS_EDITING_SECRET: ${JSS_EDITING_SECRET}
-      SITECORE_API_KEY: "${SITECORE_API_KEY_xmcloudpreview}"
-      DISABLE_SSG_FETCH: ${DISABLE_SSG_FETCH}
+      SITECORE_API_KEY: "${SITECORE_API_KEY}"
+      FETCH_WITH: "GraphQL"
+      NEXT_PUBLIC_CDP_CLIENT_KEY: ${SUCGON_EU_CDP_CLIENT_KEY}
+      NEXT_PUBLIC_CDP_TARGET_URL: ${SUCGON_EU_CDP_TARGET_URL}
+      NEXT_PUBLIC_CDP_POINTOFSALE: ${SUCGON_EU_CDP_POINTOFSALE}
+      NODE_ENV: ${NODE_ENV}
     depends_on:
       - cm
       - nodejs
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.rendering-secure.entrypoints=websecure"
-      - "traefik.http.routers.rendering-secure.rule=Host(`${RENDERING_HOST}`)"
+      - "traefik.http.routers.rendering-secure.rule=Host(`${hackathonUSA_EU_HOST}`)"
       - "traefik.http.routers.rendering-secure.tls=true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/healthz"]
+      interval: 60s
+      timeout: 30s
+  
+  hackathonUSAanz:
+    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-hackathonUSA-anz:${VERSION:-latest}
+    build:
+      context: ./docker/build/hackathonUSA
+      target: ${BUILD_CONFIGURATION}
+      args:
+        PARENT_IMAGE: ${REGISTRY}${COMPOSE_PROJECT_NAME}-nodejs:${VERSION:-latest}
+    volumes:
+      - .\src\Project\hackathonUSA\hackathonUSAAnzSxa:C:\app
+    environment:
+      SITECORE_API_HOST: "http://cm"
+      NEXTJS_DIST_DIR: ".next-container"
+      PUBLIC_URL: "https://${hackathonUSA_ANZ_HOST}"
+      JSS_EDITING_SECRET: ${JSS_EDITING_SECRET}
+      SITECORE_API_KEY: "${hackathonUSAANZ_API_KEY}"
+      FETCH_WITH: "GraphQL"
+      NEXT_PUBLIC_CDP_CLIENT_KEY: ${SUCGON_ANZ_CDP_CLIENT_KEY}
+      NEXT_PUBLIC_CDP_TARGET_URL: ${SUCGON_ANZ_CDP_TARGET_URL}
+      NEXT_PUBLIC_CDP_POINTOFSALE: ${SUCGON_ANZ_CDP_POINTOFSALE}
+      NODE_ENV: ${NODE_ENV}
+    depends_on:
+      - cm
+      - nodejs
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hackathonUSAanz-secure.entrypoints=websecure"
+      - "traefik.http.routers.hackathonUSAanz-secure.rule=Host(`${hackathonUSA_ANZ_HOST}`)"
+      - "traefik.http.routers.hackathonUSAanz-secure.tls=true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/healthz"]
+      interval: 60s
+      timeout: 30s
+
+  hackathonUSAindia:
+    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-hackathonUSA-india:${VERSION:-latest}
+    build:
+      context: ./docker/build/hackathonUSA
+      target: ${BUILD_CONFIGURATION}
+      args:
+        PARENT_IMAGE: ${REGISTRY}${COMPOSE_PROJECT_NAME}-nodejs:${VERSION:-latest}
+    volumes:
+      - .\src\Project\hackathonUSA\hackathonUSAIndiaSxa:C:\app
+    environment:
+      SITECORE_API_HOST: "http://cm"
+      NEXTJS_DIST_DIR: ".next-container"
+      PUBLIC_URL: "https://${hackathonUSA_INDIA_HOST}"
+      JSS_EDITING_SECRET: ${JSS_EDITING_SECRET}
+      SITECORE_API_KEY: "${SITECORE_API_KEY}"
+      FETCH_WITH: "GraphQL"
+      NEXT_PUBLIC_CDP_CLIENT_KEY: ${SUCGON_INDIA_CDP_CLIENT_KEY}
+      NEXT_PUBLIC_CDP_TARGET_URL: ${SUCGON_INDIA_CDP_TARGET_URL}
+      NEXT_PUBLIC_CDP_POINTOFSALE: ${SUCGON_INDIA_CDP_POINTOFSALE}
+      NODE_ENV: ${NODE_ENV}
+    depends_on:
+      - cm
+      - nodejs
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hackathonUSAindia-secure.entrypoints=websecure"
+      - "traefik.http.routers.hackathonUSAindia-secure.rule=Host(`${hackathonUSA_INDIA_HOST}`)"
+      - "traefik.http.routers.hackathonUSAindia-secure.tls=true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/healthz"]
+      interval: 60s
+      timeout: 30s
+
+  hackathon:
+    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-hackathonUSA-na:${VERSION:-latest}
+    build:
+      context: ./docker/build/hackathonUSA
+      target: ${BUILD_CONFIGURATION}
+      args:
+        PARENT_IMAGE: ${REGISTRY}${COMPOSE_PROJECT_NAME}-nodejs:${VERSION:-latest}
+    volumes:
+      - .\src\Project\hackathonUSA\hackathonSxa:C:\app
+    environment:
+      SITECORE_API_HOST: "http://cm"
+      NEXTJS_DIST_DIR: ".next-container"
+      PUBLIC_URL: "https://${hackathonUSA_NA_HOST}"
+      JSS_EDITING_SECRET: ${JSS_EDITING_SECRET}
+      SITECORE_API_KEY: "${SITECORE_API_KEY}"
+      FETCH_WITH: "GraphQL"
+      NEXT_PUBLIC_CDP_CLIENT_KEY: ${SUCGON_NA_CDP_CLIENT_KEY}
+      NEXT_PUBLIC_CDP_TARGET_URL: ${SUCGON_NA_CDP_TARGET_URL}
+      NEXT_PUBLIC_CDP_POINTOFSALE: ${SUCGON_NA_CDP_POINTOFSALE}
+      NODE_ENV: ${NODE_ENV}
+    depends_on:
+      - cm
+      - nodejs
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sugonna-secure.entrypoints=websecure"
+      - "traefik.http.routers.sugonna-secure.rule=Host(`${hackathonUSA_NA_HOST}`)"
+      - "traefik.http.routers.sugonna-secure.tls=true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/healthz"]
+      interval: 60s
+      timeout: 30s
+
+  hackathonUSA2024eu:
+    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-hackathonUSA2024eu:${VERSION:-latest}
+    build:
+      context: ./docker/build/hackathonUSA
+      target: ${BUILD_CONFIGURATION}
+      args:
+        PARENT_IMAGE: ${REGISTRY}${COMPOSE_PROJECT_NAME}-nodejs:${VERSION:-latest}
+    volumes:
+      - .\src\Project\hackathonUSA2024\hackathonUSA:C:\app
+    environment:
+      SITECORE_API_HOST: "http://cm"
+      NEXTJS_DIST_DIR: ".next-container"
+      PUBLIC_URL: "https://${hackathonUSA2024_EU_HOST}"
+      JSS_EDITING_SECRET: ${JSS_EDITING_SECRET}
+      SITECORE_API_KEY: "${SITECORE_API_KEY}"
+      FETCH_WITH: "GraphQL"
+      NEXT_PUBLIC_CDP_CLIENT_KEY: ${SUCGON2024_EU_CDP_CLIENT_KEY}
+      NEXT_PUBLIC_CDP_TARGET_URL: ${SUCGON2024_EU_CDP_TARGET_URL}
+      NEXT_PUBLIC_CDP_POINTOFSALE: ${SUCGON2024_EU_CDP_POINTOFSALE}
+      NODE_ENV: ${NODE_ENV}
+    depends_on:
+      - cm
+      - nodejs
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sugon2024eu-secure.entrypoints=websecure"
+      - "traefik.http.routers.sugon2024eu-secure.rule=Host(`${hackathonUSA2024_EU_HOST}`)"
+      - "traefik.http.routers.sugon2024eu-secure.tls=true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/healthz"]
+      interval: 60s
+      timeout: 30s
+
+  # The solution build image is added here so it can be referenced as a build dependency
+  # for the images which use its output. Setting "deploy.replicas: 0" means docker-compose will not
+  # include it in the running environment. See Dockerfile for more details.
+  solution:
+    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-solution:${VERSION:-latest}
+    build:
+      context: .
+      dockerfile: ./docker/build/solution/Dockerfile
+      args:
+        BUILD_CONFIGURATION: ${BUILD_CONFIGURATION}
+        BUILD_IMAGE: ${SOLUTION_BUILD_IMAGE}
+        BASE_IMAGE: ${SOLUTION_BASE_IMAGE}
+    deploy:
+      replicas: 0
+
+  # Container used to run the MVP Rendering host.
+  mvp-rendering:
+    image: ${REGISTRY}${COMPOSE_PROJECT_NAME}-mvp-rendering:${VERSION:-latest}
+    restart: ${DOCKER_RESTART}
+    build:
+      context: ./docker/build/rendering
+      target: ${BUILD_CONFIGURATION}
+      args:
+        DEBUG_BASE_IMAGE: ${NETCORE_BUILD_IMAGE}
+        RELEASE_BASE_IMAGE: ${NETCORE_RELEASE_IMAGE}
+        SOLUTION_IMAGE: ${REGISTRY}${COMPOSE_PROJECT_NAME}-solution:${VERSION:-latest}
+        ENTRYPOINT_ASSEMBLY: Winner.Project.WinnerSite.dll
+        ARTIFACTS_FOLDER: /artifacts/mvp-rendering
+    volumes:
+      - ${LOCAL_DEPLOY_PATH}\mvp-rendering:C:\deploy
+    environment:
+      ENTRYPOINT_ASSEMBLY: Winner.Project.WinnerSite.dll
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://*:80"
+      MVP_RENDERING_EDITING_HOST_URI: "http://mvp-rendering"
+      Sitecore__InstanceUri: "http://cm"
+      Sitecore__RenderingHostUri: "https://${MVP_RENDERING_HOST}"
+      Sitecore__EnableExperienceEditor: "true" 
+      Sitecore__JssEditingSecret: ${JSS_EDITING_SECRET}
+      Okta__OktaDomain: ${OKTA_DOMAIN}
+      Okta__ClientId: ${OKTA_CLIENT_ID}
+      Okta__ClientSecret: ${OKTA_CLIENT_SECRET}
+      Okta__AuthorizationServerId: ${OKTA_AUTH_SERVER_ID}
+      MvpSelectionsApiClient__BaseAddress: ${MVP_SELECTIONS_API}
+    depends_on:
+      - solution
+      - cm
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mvp-secure.entrypoints=websecure"
+      - "traefik.http.routers.mvp-secure.rule=Host(`${MVP_RENDERING_HOST}`)"
+      - "traefik.http.routers.mvp-secure.tls=true"   
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/healthz"]
+      interval: 60s
+      timeout: 30s
+
 
   # Mount the Traefik configuration and certs.
   traefik:
     volumes:
       - ./docker/traefik:C:/etc/traefik
     depends_on:
-      - rendering
+      - cm
 
   # Mount our SQL data folder and use our custom image with the Headless Services (JSS)
   # module data added. See Dockerfile for details.
@@ -68,21 +265,32 @@ services:
       context: ./docker/build/cm
       args:
         PARENT_IMAGE: ${SITECORE_DOCKER_REGISTRY}sitecore-xmcloud-cm:${SITECORE_VERSION}
+        SOLUTION_IMAGE: ${REGISTRY}${COMPOSE_PROJECT_NAME}-solution:${VERSION:-latest}
         TOOLS_IMAGE: ${TOOLS_IMAGE}
+    depends_on:
+      - solution
     volumes:
       - ${LOCAL_DEPLOY_PATH}\platform:C:\deploy
       - ${LOCAL_DATA_PATH}\cm:C:\inetpub\wwwroot\App_Data\logs
       - ${HOST_LICENSE_FOLDER}:c:\license
     environment:
+      Sitecore__ExternalCdUrl: "${CM_HOST}"
       SITECORE_LICENSE_LOCATION: c:\license\license.xml
-      RENDERING_HOST_INTERNAL_URI: "http://rendering:3000"
-      JSS_DEPLOYMENT_SECRET_xmcloudpreview: ${JSS_DEPLOYMENT_SECRET_xmcloudpreview}
       SITECORE_JSS_EDITING_SECRET: ${JSS_EDITING_SECRET}
-      SITECORE_EDITING_HOST_PUBLIC_HOST: "${RENDERING_HOST}"
-      SITECORE_GraphQL_CORS: ${SITECORE_GRAPHQL_CORS}
       SITECORE_Pages_Client_Host: ${SITECORE_Pages_Client_Host}
       SITECORE_Pages_CORS_Allowed_Origins: ${SITECORE_Pages_CORS_Allowed_Origins}
+      SITECORE_GraphQL_CORS: ${SITECORE_GRAPHQL_CORS}
+      ## hackathonUSAEu Rendering Host
+      hackathonUSAEU_RENDERING_HOST_ENDPOINT_URI: "${hackathonUSA_EU_HOST_INTERNAL_URI}/api/editing/render"
+      hackathonUSAEU_RENDERING_HOST_PUBLIC_URI: "https://${hackathonUSA_EU_HOST}"
+      ## hackathonUSAAnzhackathonUSA/ Rendering Host
+      hackathonUSAANZ_RENDERING_HOST_ENDPOINT_URI: "${hackathonUSA_ANZ_HOST_INTERNAL_URI}/api/editing/render"
+      hackathonUSAANZ_RENDERING_HOST_PUBLIC_URI: "https://${hackathonUSA_ANZ_HOST}"
+      ## MVP Rendering Host
+      MVP_RENDERING_HOST_PUBLIC_URI: "https://${MVP_RENDERING_HOST}"
       ## Development Environment Optimizations
       SITECORE_DEVELOPMENT_PATCHES: DevEnvOn,CustomErrorsOff,DebugOn,DiagnosticsOff,InitMessagesOff
       Sitecore_AppSettings_exmEnabled:define: "no" # remove to turn on EXM
-    entrypoint: powershell -Command "& C:/tools/entrypoints/iis/Development.ps1"
+      MVP_RENDERING_EDITING_HOST_URI: "http://mvp-rendering/"
+      RENDERING_HOST_INTERNAL_URI: ${hackathonUSA_EU_HOST_INTERNAL_URI}
+    entrypoint: powershell -Command "& C:\\tools\\entrypoints\\iis\\Development.ps1"
